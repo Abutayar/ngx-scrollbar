@@ -1,8 +1,11 @@
-import { MonoTypeOperatorFunction, tap } from 'rxjs';
+import { MonoTypeOperatorFunction, tap } from "rxjs";
 
 export function preventSelection(doc: Document): MonoTypeOperatorFunction<any> {
   return tap(() => {
     doc.onselectstart = () => false;
+    if (doc.getSelection) {
+      doc.getSelection().removeAllRanges();
+    }
   });
 }
 
